@@ -18,36 +18,16 @@ from utils_reconstruction import *
 
 
 def recuperate_data(csv_names):
-    pass
-def Treatement_passation():
-    pass
 
-def compare_passation_data():
-    pass
-
-def minimum_distance_angle_passation_data():
-    pass
-
-
-def minimum_finger_distance():
-    pass
-
-def remplacing_passation_points():
-    pass
-
-
-def reconstruction(points, ratio, image):
-
-    #=============================
     """Recuperate data"""
-    #=============================
-    data_csv = recuperate_data(csv_names)
+    data_csv = recuperate_data_in_csv(csv_names)
+    return data_csv
 
 
-    #=================================================================
+def Treatement_passation(points, ratio):
+
     """Treatement of our passation point to reconstruct
     Recuperate distance, scale and angulus."""
-    #=================================================================
 
     #Distance of thumb, index .. annular and ratio (scale).
     passation_distance, passation_scale = collect_distances(points, ratio)
@@ -62,16 +42,19 @@ def reconstruction(points, ratio, image):
     searching_points = what_we_need_to_search(passation_distance)
     print(searching_points, "\n")
 
-    #================================================
-    """Begenning to compare passation and data csv."""
-    #================================================
+    info_passation = passation_distance, passation_scale,\
+                     passation_angles, searching_points
 
+    return info_passation
+
+def compare_passation_data(data_csv, passation_distance, passation_angles, passation_scale):
+
+    """Begenning to compare passation and data csv."""
 
     liste_informations_angle = []
     liste_informations_distance = []
 
     for data in data_csv:
-
 
         """Treatment data."""
         #Recuperate distance of thumb, index ... annular and ratio.
@@ -87,7 +70,6 @@ def reconstruction(points, ratio, image):
         #CSV data and data passation.
         norm = determine_ratio(data_scale, passation_scale)
 
-
         """Recup data."""
 
         #Make a difference beetween data and passation (distance and angle).
@@ -102,9 +84,15 @@ def reconstruction(points, ratio, image):
         liste_informations_angle.append(angle)
 
 
-    #=========================================================
+    return liste_informations_distance, liste_informations_angle, norm
+
+
+
+
+def minimum_distance_angle(liste_informations_distance, liste_informations_angle,
+                            searching_points):
+
     """Search the minimum (distance angle) for rebuilt phax"""
-    #=========================================================
 
     #Make a melting of dist, angle as [liste_info, angle].
     distance_angle = melting_angle_distance(liste_informations_distance,
@@ -116,12 +104,14 @@ def reconstruction(points, ratio, image):
     #Recuperate minimum sum beetween passation and data.
     minimum_distance_angle = recuperate_minimum_distance_dist_angle(sum_dist_angle)
 
-    dico_final_dst_angle = put_informations_to_dictionnary(final_distance_angle)
+    dico_final_dst_angle = put_informations_to_dictionnary(minimum_distance_angle)
+
+    return dico_final_dst_angle
 
 
-    #======================================================
+def minimum_finger_distance():
+
     """Search the minimum distance from finger not found"""
-    #======================================================
 
     #Recuperate fingers data interest == (None detection in passation).
     fingers = recuperate_fingers_interest(liste_informations_distance, searching_points)
@@ -136,13 +126,67 @@ def reconstruction(points, ratio, image):
 
     dico_final_finger = put_informations_to_dictionnary(minimum_finger)
 
+    print(dico_final_finger)
 
+def remplacing_passation_points(searching_points, dico_final_dst_angle, norm, points, data_csv):
 
-    #======================================================
     """Replace old points to new points"""
-    #======================================================
+
+    #phax = fingers_points(finger, points_data, points_to_change, norm)
+
+    dico_for_liste = {"t" :0, "i" : 1, "m" : 2, "an" : 3, "a" : 4}
+    for k, v in searching_points.items():
+        if searching_points[k] != ["None"]:
+            print(k, v)
+            if dico_final_dst_angle[k] != []:
+                print(dico_final_dst_angle[k])
+                points = phax_points(k, norm, data_csv, dico_final_dst_angle[k], v, points)
+
+##
+##            if dico_final_finger[k] != []:
+##                print(dico_final_finger[k])
+##                points = fingers_points(k, data_csv[dico_final_finger[k]][0], points, norm)
 
 
+    blank_image1 = np.zeros((500, 500, 3), np.uint8)
+    [cv2.circle(blank_image1, (j[0], j[1]) , 2, (0, 0, 255), 2) for i in points for j in i]
+
+    #cv2.imshow("blanck", blank_image1)
+    #cv2.waitKey(0)
+
+
+
+
+
+
+
+
+def reconstruction(points, ratio, image):
+
+    data_csv = recuperate_data(1)
+
+    info_passation = Treatement_passation(points, ratio)
+
+    passation_distance, passation_scale,\
+    passation_angles, searching_points = info_passation
+
+##    print(passation_distance)
+##    print(passation_angles)
+##    print(searching_points)
+
+    liste_informations_distance, liste_informations_angle, norm\
+    = compare_passation_data(data_csv, passation_distance, passation_angles, passation_scale)
+
+
+
+    dico_final_dst_angle = minimum_distance_angle(liste_informations_distance,
+                                                  liste_informations_angle, searching_points)
+    print(dico_final_dst_angle)
+
+    
+    remplacing_passation_points(searching_points, dico_final_dst_angle, norm, points, data_csv)
+
+    print(data_csv[33])
 
 
 
