@@ -8,6 +8,25 @@ import numpy as np
 import auto_write_thread
 from scipy.spatial import distance as dist
 
+PATH_FOLDER_CSV = r"C:\Users\jeanbaptiste\Desktop\pounties\data\csv"
+def recuperate_data_in_csv(csv_name):
+    """From csv we recuperate points data"""
+
+    path = PATH_FOLDER_CSV + "/" + str(csv_name) + ".csv"
+
+    liste_data = []
+
+    with open(path, newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for i in reader:
+            liste_data.append((ast.literal_eval(i["points"]),
+                               ast.literal_eval(i["ratio"]),
+                               ast.literal_eval(i["label"])))
+
+    return liste_data
+
+
+
 #==============================
 """Normalize distance"""
 #==============================
