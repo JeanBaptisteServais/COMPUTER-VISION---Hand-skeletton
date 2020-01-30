@@ -8,6 +8,8 @@ import numpy as np
 import auto_write_thread
 from scipy.spatial import distance as dist
 
+
+
 PATH_FOLDER_CSV = r"C:\Users\jeanbaptiste\Desktop\pounties\data\csv"
 def recuperate_data_in_csv(csv_name):
     """From csv we recuperate points data"""
@@ -269,28 +271,31 @@ def passation_treatment(points_current, ratio_current):
 
 
 
-def data_treatment(csv_name, ratio_current):
+def data_treatment(number, ratio_current):
     #CSV POINTS
-    data_csv = recuperate_data_in_csv(csv_name)
 
     liste_angle = []
     liste_distance = []
-    for data in data_csv:
 
-        points_data, ratio_data = data[0], data[1]
-        
-        #collect normalize distances
-        ratio_data = make_ratio(ratio_data)
+    for csv_name in range(1, number):
+        data_csv = recuperate_data_in_csv(csv_name)
 
-        norm, which = normalisation(ratio_data, ratio_current)
-        distance_data = collect_distances(points_data, which, norm, "data")
+        for data in data_csv:
 
-        #collect angles
-        abscisse = collect_abscisse(points_data)
-        angle_data = points_to_angle(abscisse)
+            points_data, ratio_data = data[0], data[1]
+            
+            #collect normalize distances
+            ratio_data = make_ratio(ratio_data)
 
-        liste_angle.append(angle_data)
-        liste_distance.append(distance_data)
+            norm, which = normalisation(ratio_data, ratio_current)
+            distance_data = collect_distances(points_data, which, norm, "data")
+
+            #collect angles
+            abscisse = collect_abscisse(points_data)
+            angle_data = points_to_angle(abscisse)
+
+            liste_angle.append(angle_data)
+            liste_distance.append(distance_data)
 
     return liste_angle, liste_distance
 

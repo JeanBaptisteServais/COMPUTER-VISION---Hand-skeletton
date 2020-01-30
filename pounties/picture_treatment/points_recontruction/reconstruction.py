@@ -15,12 +15,12 @@ def rebuilt(points_current, ratio_current):
     passation = passation_treatment(points_current, ratio_current)
     ratio_current, distance_current, angle_current, search_points, points_current = passation
 
-    liste_angle, liste_distance = data_treatment(2, ratio_current)
-
+    liste_angle, liste_distance = data_treatment(5, ratio_current)
+    print(len(liste_angle))
 
 
     for info in search_points:
-        
+
         print(info)
 
         finger_name, phax_searching, phax_interest = info
@@ -31,6 +31,9 @@ def rebuilt(points_current, ratio_current):
 
         minimums = recuperate_minimums_values(liste_metablockant, liste_1)
         index_minimum_distance, index_minimum_angle = minimums
+        print(minimums)
+
+
 
 
         #REPLACE DATA CURRENT
@@ -43,6 +46,7 @@ def rebuilt(points_current, ratio_current):
 
 
 
+    
 
         elif phax_interest == len(points_current[finger_name]) - 1: #[0 0 x]
             points_current[finger_name][phax_interest][0] = points_current[finger_name][phax_searching][1]
@@ -51,12 +55,23 @@ def rebuilt(points_current, ratio_current):
             replace_point(phax_interest, 0, 1, "minus", points_current, finger_name, distance, angle)
 
 
+
+
+
+
         else:#[0 x 0]
+            #((0, 0), (0, 0)), ((1, 2), (3, 4)) -> ((0, 0), (1, 2)), ((1, 2), (3, 4))
             points_current[finger_name][phax_interest][0] = points_current[finger_name][phax_searching][1]
+
+
             distance, angle = recuperate_angle_distance(liste_distance, liste_angle, index_minimum_angle,
                                                         index_minimum_distance, finger_name, phax_interest)
+
+            print(distance, angle)
             replace_point(phax_interest, 0, 1, "add", points_current, finger_name, distance, angle)
 
+
+        print("")
 
 
     olé = []
@@ -64,6 +79,11 @@ def rebuilt(points_current, ratio_current):
         for i in v:
             olé.append(tuple(i))
 
+##    olé = [((84, 115), (97, 105)), ((97, 105), (115, 94)), ((115, 94), (122, 79)), ((122, 79), (126, 69)),
+##           ((86, 76), (83, 55)), ((83, 55), (83, 47)), ((83, 47), (83, 40)),
+##           ((75, 79), (68, 55)), ((68, 55), (58, 45)), ((58, 45), (63, 54)),
+##           ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)),
+##           ((51, 98), (44, 91)), ((44, 91), (40, 94)), ((40, 94), (41, 90))]
 
     blank_image = np.zeros((500, 500, 3), np.uint8)
     for i in olé:
