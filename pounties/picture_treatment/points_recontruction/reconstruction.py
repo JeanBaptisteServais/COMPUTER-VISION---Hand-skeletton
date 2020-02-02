@@ -1,103 +1,66 @@
+from knn import *
 
-
-from utils_reconstruction import *
-
-
-points_current = [((0, 0), (0, 0)), ((97, 105), (115, 94)), ((115, 94), (122, 79)), ((122, 79), (126, 69)), ((0, 0), (0, 0)), ((86, 76), (83, 55)), ((83, 55), (83, 47)), ((83, 47), (83, 40)), ((0, 0), (0, 0)), ((75, 79), (68, 55)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((51, 98), (44, 91)), ((44, 91), (40, 94)), ((40, 94), (41, 90))]
-ratio_current = (31, 31, 113, 109)
-
+from recuperate_features import *
+from convert_variable import *
+from recuperate_points import searching_points
 
 
 
+points = [((0, 0), (0, 0)), ((97, 105), (115, 94)), ((115, 94), (122, 79)), ((122, 79), (126, 69)), ((0, 0), (0, 0)), ((86, 76), (83, 55)), ((83, 55), (83, 47)), ((83, 47), (83, 40)), ((0, 0), (0, 0)), ((75, 79), (68, 55)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((51, 98), (44, 91)), ((44, 91), (40, 94)), ((40, 94), (41, 90))]
+scale = (31, 31, 113, 109)
+
+#points = [((0, 0), (0, 0)), ((120, 153), (147, 132)), ((147, 132), (158, 104)), ((158, 104), (169, 83)), ((93, 170), (99, 105)), ((99, 105), (110, 78)), ((110, 78), (132, 62)), ((132, 62), (83, 61)), ((93, 170), (83, 110)), ((83, 110), (50, 100)), ((50, 100), (24, 93)), ((24, 93), (152, 45)), ((93, 170), (77, 126)), ((77, 126), (50, 121)), ((50, 121), (29, 115)), ((29, 115), (126, 45)), ((93, 170), (77, 137)), ((77, 137), (56, 143)), ((56, 143), (45, 137)), ((45, 137), (35, 132))]
+#scale = (3, 17, 194, 214)
+
+
+
+#Passation
+angulus, distances, scale = passation_informations(points, scale)
+
+#Data
+distance_list, angulus_list, scale_list, data = data_informations()
+
+
+#to dict
+angulus = element_to_dict(angulus)
+distances = element_to_dict(distances)
+points = element_to_dict(points)
+
+
+
+to_search = searching_points(points)
+print(to_search)
+
+print("")
+
+none = ((0, 0), (0, 0))
+for k, v in to_search.items():
+
+    if v != []:
+        print(k)
         
-def rebuilt(points_current, ratio_current):
+        for nb, i in enumerate(v):
 
-    passation = passation_treatment(points_current, ratio_current)
-    ratio_current, distance_current, angle_current, search_points, points_current = passation
+            if i == none:
 
-    liste_angle, liste_distance = data_treatment(5, ratio_current)
-    print(len(liste_angle))
+                print("phax :", nb)
+                a, b = recuperate_minimal_informations(distance_list, angulus_list, scale_list,
+                                                       v, angulus, distances, scale, k)
+                print(a, b)
 
-
-    for info in search_points:
-
-        print(info)
-
-        finger_name, phax_searching, phax_interest = info
-
-        liste_metablockant = compare_distance(liste_distance, distance_current, finger_name, phax_searching)
-
-        liste_1 = compare_angle(liste_angle, angle_current, finger_name, phax_searching)
-
-        minimums = recuperate_minimums_values(liste_metablockant, liste_1)
-        index_minimum_distance, index_minimum_angle = minimums
-        print(minimums)
+                print("")
+                
 
 
 
 
-        #REPLACE DATA CURRENT
-
-        if phax_interest == 0: #[x 0 0]
-            points_current[finger_name][0][1] = points_current[finger_name][1][0]
-            distance, angle = recuperate_angle_distance(liste_distance, liste_angle, index_minimum_angle,
-                                                        index_minimum_distance, finger_name, phax_interest)
-            replace_point(0, 1, 0, "minus", points_current, finger_name, distance, angle)
-
-
-
-    
-
-        elif phax_interest == len(points_current[finger_name]) - 1: #[0 0 x]
-            points_current[finger_name][phax_interest][0] = points_current[finger_name][phax_searching][1]
-            distance, angle = recuperate_angle_distance(liste_distance, liste_angle, index_minimum_angle,
-                                                        index_minimum_distance, finger_name, phax_interest)
-            replace_point(phax_interest, 0, 1, "minus", points_current, finger_name, distance, angle)
+ 
 
 
 
 
 
 
-        else:#[0 x 0]
-            #((0, 0), (0, 0)), ((1, 2), (3, 4)) -> ((0, 0), (1, 2)), ((1, 2), (3, 4))
-            points_current[finger_name][phax_interest][0] = points_current[finger_name][phax_searching][1]
-
-
-            distance, angle = recuperate_angle_distance(liste_distance, liste_angle, index_minimum_angle,
-                                                        index_minimum_distance, finger_name, phax_interest)
-
-            print(distance, angle)
-            replace_point(phax_interest, 0, 1, "add", points_current, finger_name, distance, angle)
-
-
-        print("")
-
-
-    olé = []
-    for k, v in points_current.items():
-        for i in v:
-            olé.append(tuple(i))
-
-##    olé = [((84, 115), (97, 105)), ((97, 105), (115, 94)), ((115, 94), (122, 79)), ((122, 79), (126, 69)),
-##           ((86, 76), (83, 55)), ((83, 55), (83, 47)), ((83, 47), (83, 40)),
-##           ((75, 79), (68, 55)), ((68, 55), (58, 45)), ((58, 45), (63, 54)),
-##           ((0, 0), (0, 0)), ((0, 0), (0, 0)), ((0, 0), (0, 0)),
-##           ((51, 98), (44, 91)), ((44, 91), (40, 94)), ((40, 94), (41, 90))]
-
-    blank_image = np.zeros((500, 500, 3), np.uint8)
-    for i in olé:
-        for j in i:
-            cv2.circle(blank_image, (int(j[0]), int(j[1])) , 2, (0, 0, 255), 2)
-            cv2.line(blank_image, (i[0]), (i[1]), (0, 255, 0), 2)
-    cv2.imshow("blank_imageaaa", blank_image)
-    cv2.waitKey(0)
-
-
-    return points_current
-    
-
-points_current = rebuilt(points_current, ratio_current)
 
 
 
