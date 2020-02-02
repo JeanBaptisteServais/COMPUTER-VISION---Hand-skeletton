@@ -12,7 +12,6 @@ c) if not pass skeletton / recuperate skeletton points
 
 
 
-- pounties -
 
 On knn file, we have a lot of filter of None detection. It because we take skeletton with at least 18 pairs of points / 20
 
