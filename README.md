@@ -8,7 +8,7 @@ a ) pounties to pounties
 
 b) if not pass pouties
 
-c) if not pass skeletton / recuperate skeletton points
+c) if not (distance more than 10 ?) pass skeletton / recuperate skeletton points
 
 
 
