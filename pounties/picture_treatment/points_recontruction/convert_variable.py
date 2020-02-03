@@ -20,6 +20,18 @@ def list_to_tuple(points):
      Like [[0, 0], [0, 0]] to ((0, 0), (0,0))"""
     return [tuple(i) for i in points]
 
+def dictionnary_tuple_to_list(points):
+    """Transform value of a dictionnary to
+    list value on the second dictionnary"""
+
+    dico_list = {"t" : [],  "i" : [], "m" : [], "an" : [],
+                 "a" : []}
+
+    for k, v in points.items():
+        for i in v:
+            dico_list[k].append(list(i))
+
+    return dico_list
 
 def list_to_dict(points):
     """Transform tuple to list to dictionnary.
