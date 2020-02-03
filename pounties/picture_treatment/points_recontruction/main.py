@@ -57,6 +57,10 @@ def reconstruction_points(points, scale):
        4) - Make a knn for find data closer to our passation points
        5) - re built points."""
 
+
+
+    """ONE) - Data treatment"""
+
     #Passation treatment.
     angulus, distances, scale = passation_informations(points, scale)
 
@@ -74,9 +78,12 @@ def reconstruction_points(points, scale):
 
 
 
+    """TWO) - Compare data with passation"""
+
     for finger_name, pts in to_search.items():
 
-        #Less one point detected. Can rebuilt finger
+
+        """TWO A) - Less one point detected. Can rebuilt finger"""
         if pts != []:
             print(finger_name)
 
@@ -86,7 +93,7 @@ def reconstruction_points(points, scale):
             points = less_one_points_detected(informations1)
 
 
-        #Finger no detected.
+        """TWO B) - Finger no detected."""
         elif pts == []:
             pass
 
