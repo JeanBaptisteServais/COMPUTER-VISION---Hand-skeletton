@@ -1,6 +1,6 @@
-# try-rebuilt-Hand-skeletton
+# rebuilt-Hand-skeletton
 
-It not working for now maybe if we download skeletton
+could works coulnd't works
 
 main
 
