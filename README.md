@@ -2,7 +2,7 @@
 
 could works coulnd't works
 
-detection, mask, delete points, identify finger
+1) - detection, mask, delete points, identify finger
 
 a ) pounties to pounties
 
