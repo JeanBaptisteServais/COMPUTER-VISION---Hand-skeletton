@@ -2,11 +2,11 @@
 
 could works coulnd't works
 
-main
+detection, mask, delete points, identify finger
 
 a ) pounties to pounties
 
-b) if not pass pouties
+b) truk knn data
 
 c) if not (distance more than 10 ?) pass skeletton / recuperate skeletton points
 
