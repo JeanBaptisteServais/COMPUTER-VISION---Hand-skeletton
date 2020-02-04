@@ -10,11 +10,13 @@ from scipy.spatial import distance as dist
 """RECUPERATE CLOSED POINTS"""
 #==============================
 
-def recuperate_distance_angulus_data(index_pair, distance_list, angulus_list, finger_name):
+def recuperate_distance_angulus_data(informations_searching):
 
     """1) Here we order points in dictionnary annoted by finger name's.
        2) We recuperate distance and angulus from the finger interest.
        3) Append it to list with data indexed"""
+
+    index_pair, distance_list, angulus_list, finger_name = informations_searching
 
     list_distance_treat = []
     list_angulus_treat = []
@@ -53,7 +55,7 @@ def points_interests(finger_name, indexed_points, distances, angulus):
     return distance_indexed, angulus_indexed
 
 
-def make_difference_to_square(i, j, l, m, k, n, ind):
+def make_difference_to_square(informations):
     """ (i) distance_data        (l) distance passation
         (j) angulus_data         (m) angulus passation
         (k) scale data           (n) scale passation
@@ -63,8 +65,8 @@ def make_difference_to_square(i, j, l, m, k, n, ind):
         (data points)i - (passation points)i to square
     """
 
-    #QUOTE: i prefere variable like it
-
+    i, j, l, m, k, n, ind = informations
+    
     list_w = []
     list_w1 = []
 
@@ -96,7 +98,7 @@ def make_square_root(list3, list4, list_distance, list_angulus, index_data):
 
     #Make the sum of the last difference to square of all points
     distance = sum([i[0] for i in list_distance])
-    angulus = sum([i[0] for i in list_angulus])
+    angulus =  sum([i[0] for i in list_angulus])
 
     #Make the square root (apply euclidean distance)
     distance_square_root = math.sqrt(distance)  #Distance
@@ -123,37 +125,36 @@ def recuperate_index_on_data_csv(list3, list4):
     dist_distance = list3[0][0]   #Distance of the minimal distance
     dist_angulus = list4[0][0]
 
-    #print(dist_distance, dist_angulus)
+    print(dist_distance, dist_angulus)
 
     return index_distance, index_angulus
 
-    
-def recuperate_minimal_informations(distance_list, angulus_list, scale_list,
-                                    value, angulus, distances, scale, key):
 
-    #1) - Recuperate points of fingers if not (0, 0)
-    none = ((0, 0), (0, 0))
-    index_pair = [nb for nb, i in enumerate(value) if i != none]
+def recuperate_minimal(informations):
+
+    #Data needed
+    distance_list, angulus_list, scale_list,\
+    angulus, distances, scale, finger_name, index_pair = informations
 
     #2) - Distance/angulus from phax points from index_pair DATA (1)
-    list1, list2 = recuperate_distance_angulus_data(index_pair, distance_list,
-                                                    angulus_list, key)
+    informations_searching = index_pair, distance_list, angulus_list, finger_name
+    listDistance, listAngulus = recuperate_distance_angulus_data(informations_searching)
 
     #3) - Recuperate distance/angle from phax points PASSATION
-    distances, angulus = points_interests(key, index_pair, distances, angulus)
+    distances, angulus = points_interests(finger_name, index_pair, distances, angulus)
 
 
     #4) - Run points interest from (2) and compare them with (3)
     list3 = []
     list4 = []
-    for i, j in zip(list1, list2):
+    for i, j in zip(listDistance, listAngulus):
 
         index_data1 = i[1] #i[0] is points, i[1] is index in data csv
 
         #5) - Compare data and passation informations.
         #Make difference to square.
-        list_w, list_w1 = make_difference_to_square(i, j, distances, angulus,
-                                                    scale_list, scale, index_data1)
+        informations = (i, j, distances, angulus, scale_list, scale, index_data1)
+        list_w, list_w1 = make_difference_to_square(informations)
 
         #Filter if we got a none detection
         if len(index_pair) == len(list_w):
@@ -164,6 +165,7 @@ def recuperate_minimal_informations(distance_list, angulus_list, scale_list,
 
     #7) - Recuperate index on csv data from the minimal euclidean distance/angulus
     ind1, ind2 = recuperate_index_on_data_csv(list3, list4)
+
 
     return ind1, ind2
 
