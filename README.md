@@ -2,13 +2,13 @@
 
 could works coulnd't works
 
-1) - detection, mask, delete points, identify finger
+premier traitement: - detection, mask, delete points, identify finger
 
-a ) pounties to pounties
+deuxieme ) pounties to pounties
 
-b) truk knn data
+si deuxieme ne passe pas -> troisieme) truk knn data
 
-c) if not (distance more than 10 ?) pass skeletton / recuperate skeletton points
+si troisieme ne passe pas -> quatrieme) if not (distance more than 10 ?) pass skeletton / recuperate skeletton points
 
 
 
