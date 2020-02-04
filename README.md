@@ -11,9 +11,9 @@ si deuxieme ne passe pas -> troisieme) truk knn data
 si troisieme ne passe pas -> quatrieme) if not (distance more than 10 ?) pass skeletton / recuperate skeletton points
 
 
-
+<br><br><br>
 
 On knn file, we have a lot of filter of None detection. It because we take skeletton with at least 18 pairs of points / 20
 
-
+de temps en temps supprimer les data qui sont pas bonnes
 
