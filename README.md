@@ -4,16 +4,16 @@ could works coulnd't works
 
 premier traitement: - detection, mask, delete points, identify finger
 
-deuxieme ) pounties to pounties
+deuxieme traitement: - pounties to pounties
 
-si deuxieme ne passe pas -> troisieme) truk knn data
+deuxieme: not pass
 
-si troisieme ne passe pas -> quatrieme) if not (distance more than 10 ?) pass skeletton / recuperate skeletton points
+troisieme traitement: - truk knn data 
+
+troisieme: not pass
+
+quatrieme traitement: - if not (distance more than 10 ?) pass skeletton / recuperate skeletton points
 
 
-<br><br><br>
 
-On knn file, we have a lot of filter of None detection. It because we take skeletton with at least 18 pairs of points / 20
-
-de temps en temps supprimer les data qui sont pas bonnes
 
