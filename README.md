@@ -1,6 +1,6 @@
 # rebuilt-Hand-skeletton
 
-could works coulnd't works
+
 
 premier traitement: - detection, mask, delete points, identify finger
 
