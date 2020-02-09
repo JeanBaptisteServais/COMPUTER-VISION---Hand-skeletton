@@ -12,7 +12,7 @@ troisieme traitement: - truk knn data (in verification)
 
 troisieme: not pass
 
-quatrieme traitement: - recuperate skeletton points into csv
+quatrieme traitement: - recuperate skeletton points into csv (done)
 
 
 
