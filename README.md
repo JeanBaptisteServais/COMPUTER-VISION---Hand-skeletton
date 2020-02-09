@@ -9,7 +9,7 @@ deuxieme traitement: - pounties to pounties (skelette directement dans la main)
 
 <strong><em> deuxieme: not pass </em></strong>
 
-troisieme traitement: - truk knn data (in verification)
+troisieme traitement: - truk knn data <strong><em>(in verification) </em></strong>
 
 <strong><em> troisieme: not pass </em></strong>
 
