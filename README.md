@@ -4,15 +4,15 @@
 
 premier traitement: - detection, mask, delete points, identify finger
 
-deuxieme traitement: - pounties to pounties
+deuxieme traitement: - pounties to pounties (skelette directement dans la main)
 
 deuxieme: not pass
 
-troisieme traitement: - truk knn data 
+troisieme traitement: - truk knn data (in verification)
 
 troisieme: not pass
 
-quatrieme traitement: - if not (distance more than 10 ?) pass skeletton / recuperate skeletton points
+quatrieme traitement: - recuperate skeletton points into csv
 
 
 
