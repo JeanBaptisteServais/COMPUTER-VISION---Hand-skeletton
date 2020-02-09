@@ -1,6 +1,6 @@
 # rebuilt-Hand-skeletton
 
-Here we try to reconstruct hand skelettor with hand skelettor model (doc in course after verification)
+Here we try to reconstruct hand skelettor with hand skelettor model <strong><em>(doc in course after verification)</em<</strong>
 
 
 premier traitement: - detection, mask, delete points, identify finger
