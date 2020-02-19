@@ -2,6 +2,8 @@
 
 Here we try to reconstruct hand skelettor with hand skelettor model <strong><em>(doc in course after verification) </em></strong>
 
+Here we need to finish it (but second part is maybe ope)
+
 <br><br><br>
 
 <strong>Premier traitement:</strong> - detection, mask, delete points, identify finger <- epuration of points <strong><em> In course </em></strong>
