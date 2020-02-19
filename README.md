@@ -2,7 +2,7 @@
 
 Here we try to reconstruct hand skelettor with hand skelettor model <strong><em>(doc in course after verification) </em></strong>
 
-Here we need to finish it (but second part is maybe ope)
+Here we need to finish it (but second part is maybe ope and need to finish all error who's can be present in del none points it's not an expliocation just a memo !)
 
 <br><br><br>
 
